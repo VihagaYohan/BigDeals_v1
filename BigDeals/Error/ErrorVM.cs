@@ -10,6 +10,7 @@ namespace BigDeals.Data.ViewModels.Error
 	{
 		public int StatusCode { get; set; }
 		public string Messasge { get; set; }
+		public string  Path { get; set; }
 
 		public override string ToString()
 		{
