@@ -26,6 +26,7 @@ namespace BigDeals.Controllers
 		{
 			try
 			{
+				throw new Exception("this will handle by middleware");
 				var result = _service.AddCategory(categoryVM);
 				if (result == null)
 				{
@@ -36,7 +37,7 @@ namespace BigDeals.Controllers
 					return Created(nameof(AddCategories), result); ;
 				}
 			}
-			catch (RecordNameException ex) 
+			catch (RecordNameException ex)
 			{
 				return BadRequest($"{ex.Message}, Category name: {ex.RecordName}");
 			}
@@ -44,8 +45,6 @@ namespace BigDeals.Controllers
 			{
 				return BadRequest(ex.Message);
 			}
-
-
 		}
 	}
 }
