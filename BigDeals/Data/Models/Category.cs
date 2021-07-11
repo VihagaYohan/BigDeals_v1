@@ -10,9 +10,16 @@ namespace BigDeals.Data.Models
 	{
 		[Key]
 		public int CatgoryId { get; set; }
+
+		[Required]
+		[MaxLength(50,ErrorMessage ="Please add product category name")]
 		public string CategoryName { get; set; }
+
+		[Required]
 		public string ImageURL { get; set; }
-		public DateTime AddedDate { get; set; }
+
+		[Required]
+		public DateTime AddedDate { get; set; } = DateTime.Now;
 
 		// navigation properties
 		public IEnumerable<Product> Products { get; set; }
