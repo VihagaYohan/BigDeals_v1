@@ -1,6 +1,7 @@
 ﻿using BigDeals.Data.Models;
 using BigDeals.Data.Services;
 using BigDeals.Data.ViewModels.Category;
+using BigDeals.Error.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,10 +22,30 @@ namespace BigDeals.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult AddCategories([FromBody]CategoryVM categoryVM) 
+		public IActionResult AddCategories([FromBody] CategoryVM categoryVM)
 		{
-			var result = _service.AddCategory(categoryVM);
-			return Ok(result);
+			try
+			{
+				var result = _service.AddCategory(categoryVM);
+				if (result == null)
+				{
+					return BadRequest();
+				}
+				else
+				{
+					return Created(nameof(AddCategories), result); ;
+				}
+			}
+			catch (RecordNameException ex) 
+			{
+				return BadRequest($"{ex.Message}, Category name: {ex.RecordName}");
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
+
+
 		}
 	}
 }
